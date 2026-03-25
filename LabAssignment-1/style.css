@@ -1,0 +1,370 @@
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-card: #141414;
+    --accent: #ff4d00; /* Electric Orange */
+    --text-main: #f5f5f5;
+    --text-muted: #888888;
+    --white: #ffffff;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+/* 2. Striking Header */
+.main-header {
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #222;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--white);
+}
+
+.logo span { color: var(--accent); }
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    margin: 0 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+/* 3. High-Impact Hero */
+.hero {
+    height: 90vh;
+    background: url('https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    padding-left: 5%;
+}
+
+.tagline {
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: 4px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.hero-content h1 {
+    font-size:clamp(2.5rem, 8vw, 5rem);
+    line-height: 0.9;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.hero-btns {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 15px 40px;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: var(--transition);
+}
+
+.btn-primary { background: var(--accent); 
+    color: var(--white); }
+
+.btn-outline { border: 2px solid var(--white); 
+    color: var(--white); }
+
+.btn:hover { transform: scale(1.05); }
+
+/* 4. Article: Visual Storytelling */
+.brand-story {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 120px 20px;
+    gap: 60px;
+}
+
+.story-image, .story-text { flex: 1 1 450px; }
+
+.story-image img {
+    width: 100%;
+    border-radius: 2px;
+    filter: grayscale(20%);
+}
+
+.story-text h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.read-more {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+/* 5. Modern Product Grid */
+.products { padding-bottom: 120px; }
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title { font-size: 3rem; text-transform: uppercase; }
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+}
+
+.product-card {
+    background: var(--bg-card);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.product-img-wrapper {
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+}
+
+.product-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.quick-add {
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    color: var(--white);
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.product-card:hover .quick-add { bottom: 0; }
+.product-card:hover img { transform: scale(1.1); 
+    filter: brightness(0.7); }
+
+.product-info { padding: 25px; }
+
+.product-info h3 { font-size: 1.2rem; 
+    margin-bottom: 5px; }
+
+.category { color: var(--text-muted); 
+    font-size: 0.8rem;
+     text-transform: uppercase; }
+
+.price {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-top: 10px;
+}
+
+/* 6. Bold Footer */
+.main-footer {
+    background: #000;
+    padding: 80px 0 30px;
+    border-top: 1px solid #111;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 50px;
+}
+
+.footer-col h4 { margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
+
+.footer-col ul { list-style: none; }
+
+.footer-col ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    line-height: 2.5;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.footer-col ul li a:hover { color: var(--accent); padding-left: 5px; }
+
+.newsletter-form {
+    display: flex;
+    margin-top: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.newsletter-form input {
+    background: transparent;
+    border: none;
+    padding: 10px 0;
+    color: var(--white);
+    width: 80%;
+}
+
+.newsletter-form button {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 80px;
+    color: #444;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+}
+
+/*
+   7. RESPONSIVE DESIGN (Assignment Requirements)
+*/
+
+/* Tablet View (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    }
+}
+
+/* Mobile View (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Header Adjustments */
+    .nav-links {
+        display: none; /* Hides links on mobile to keep it clean */
+    }
+
+    /* Hero Section Adjustments */
+    .hero {
+        height: 70vh;
+        text-align: center;
+    }
+    
+    .hero-content {
+        padding: 0 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.8rem; /* Smaller font for mobile screens */
+    }
+
+    .hero-btns {
+        justify-content: center;
+        flex-direction: column; /* Buttons stack on top of each other */
+    }
+
+    /* Brand Story (Article) Adjustments */
+    .brand-story {
+        flex-direction: column; /* Image and text stack vertically */
+        padding: 60px 20px;
+        text-align: center;
+    }
+
+    .story-text h2 {
+        font-size: 2rem;
+    }
+
+    /* Product Grid Adjustments */
+    .product-grid {
+        grid-template-columns: 1fr; /* 1 column on mobile for better visibility */
+        gap: 20px;
+    }
+
+    .product-img-wrapper {
+        height: 300px;
+    }
+
+    /* Footer Adjustments */
+    .footer-grid {
+        grid-template-columns: 1fr; /* Stack footer columns */
+        text-align: center;
+    }
+
+    .newsletter-form {
+        justify-content: center;
+    }
+}
+
