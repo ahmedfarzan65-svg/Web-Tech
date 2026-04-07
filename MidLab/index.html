@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOT WEAR | Elite Footwear</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">FOOT WEAR</div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#men">Men</a></li>
+            <li><a href="#women">Women</a></li>
+            <li><a href="#sale">Sale</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <div class="hero-text">
+                <h1>UNLEASH YOUR MOTION</h1>
+                <p>High quality shoes for performance and style.</p>
+                <a href="#products" class="shop-btn">Shop Now</a>
+            </div>
+        </div>
+
+        <section id="products" class="container">
+            <h2 class="title">Featured Drops</h2>
+            <div class="product-grid" id="product-grid">
+                <p style="text-align: center; width: 100%;">Loading gear...</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-img-container">
+                    <img id="modal-img" src="" alt="Shoe Image">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modal-title">Product Name</h2>
+                    <p id="modal-price" class="price"></p>
+                    <div id="modal-rating" class="rating"></div>
+                    <p id="modal-desc" class="description"></p>
+                    <button class="add-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 FOOT WEAR. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
