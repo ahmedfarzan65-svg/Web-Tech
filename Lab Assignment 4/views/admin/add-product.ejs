@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management | Create Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-box { max-width: 600px; margin: 50px auto; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .form-box h2 { margin-bottom: 20px; color: #222; border-bottom: 2px solid #ff4d00; padding-bottom: 10px; }
+        .input-row { margin-bottom: 18px; }
+        .input-row label { display: block; margin-bottom: 6px; font-weight: bold; color: #555; }
+        .input-row input, .input-row select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .save-btn { background: #ff4d00; color: white; padding: 12px 20px; border: none; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Add Product to Store Inventory</h2>
+        <form action="/admin/add" method="POST" enctype="multipart/form-data">
+            <div class="input-row">
+                <label>Product Title Name *</label>
+                <input type="text" name="name" required placeholder="e.g. Air Max Fusion">
+            </div>
+            <div class="input-row">
+                <label>Unit Base Price (Rs.) *</label>
+                <input type="number" name="price" required min="1">
+            </div>
+            <div class="input-row">
+                <label>Target Category Segment *</label>
+                <select name="category" required>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                    <option value="Unisex">Unisex</option>
+                </select>
+            </div>
+            <div class="input-row">
+                <label>Rating Index Metric *</label>
+                <input type="number" name="rating" step="0.1" min="1" max="5" required placeholder="4.5">
+            </div>
+            <div class="input-row">
+                <label>Available Stock Volume *</label>
+                <input type="number" name="stock" required min="0">
+            </div>
+            <div class="input-row">
+                <label>Product Image Asset File *</label>
+                <input type="file" name="image" accept="image/*" required>
+            </div>
+            <button type="submit" class="save-btn">Commit Product Record</button>
+        </form>
+    </div>
+</body>
+</html>
