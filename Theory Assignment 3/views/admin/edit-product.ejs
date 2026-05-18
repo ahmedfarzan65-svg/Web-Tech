@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management | Edit Item</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .form-box { max-width: 600px; margin: 50px auto; padding: 30px; background: white; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .form-box h2 { margin-bottom: 20px; color: #222; border-bottom: 2px solid #ff4d00; padding-bottom: 10px; }
+        .input-row { margin-bottom: 18px; }
+        .input-row label { display: block; margin-bottom: 6px; font-weight: bold; color: #555; }
+        .input-row input, .input-row select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .save-btn { background: #333; color: white; padding: 12px 20px; border: none; width: 100%; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .current-img-hint { margin: 8px 0; font-size: 13px; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Modify Product Registry Properties</h2>
+        <form action="/admin/edit/<%= product._id %>" method="POST" enctype="multipart/form-data">
+            <div class="input-row">
+                <label>Product Title Name</label>
+                <input type="text" name="name" value="<%= product.name %>" required>
+            </div>
+            <div class="input-row">
+                <label>Unit Base Price (Rs.)</label>
+                <input type="number" name="price" value="<%= product.price %>" required>
+            </div>
+            <div class="input-row">
+                <label>Target Category Segment</label>
+                <select name="category" required>
+                    <option value="Men" <%= product.category === 'Men' ? 'selected' : '' %>>Men</option>
+                    <option value="Women" <%= product.category === 'Women' ? 'selected' : '' %>>Women</option>
+                    <option value="Unisex" <%= product.category === 'Unisex' ? 'selected' : '' %>>Unisex</option>
+                </select>
+            </div>
+            <div class="input-row">
+                <label>Rating Index Metric</label>
+                <input type="number" name="rating" step="0.1" value="<%= product.rating %>" required>
+            </div>
+            <div class="input-row">
+                <label>Available Stock Volume</label>
+                <input type="number" name="stock" value="<%= product.stock %>" required>
+            </div>
+            <div class="input-row">
+                <label>Update Product Image Asset (Leave empty to keep current file)</label>
+                <input type="file" name="image" accept="image/*">
+                <p class="current-img-hint">Active Image Resource Path: <%= product.image %></p>
+            </div>
+            <button type="submit" class="save-btn">Save Product Changes</button>
+        </form>
+    </div>
+</body>
+</html>

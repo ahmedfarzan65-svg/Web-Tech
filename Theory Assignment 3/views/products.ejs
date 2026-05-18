@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOT WEAR | Elite Footwear</title>
+   <link rel="stylesheet" href="/css/style.css?v=1.1">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">NOIR <span>STEPS</span></div>
+        
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/products">Home</a></li>
+            <li><a href="/products?category=Men">Men</a></li>
+            <li><a href="/products?category=Women">Women</a></li>
+            <li><a href="/products?category=Unisex">Unisex</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="hero">
+            <div class="hero-text">
+                <h1>UNLEASH YOUR MOTION</h1>
+                <p>High quality shoes for performance and style.</p>
+                <a href="#catalog-section" class="shop-btn">Shop Catalog</a>
+            </div>
+        </div>
+
+        <section id="catalog-section" class="container">
+            <h2 class="title">Dynamic Footwear Catalog</h2>
+            
+            <form action="/products" method="GET" class="filter-form">
+                <div class="filter-group search-bar">
+                    <input type="text" name="search" placeholder="Search by model name..." value="<%= filters.search %>">
+                </div>
+
+                <div class="filter-group">
+                    <select name="category">
+                        <option value="">All Categories</option>
+                        <option value="Men" <%= filters.category === 'Men' ? 'selected' : '' %>>Men</option>
+                        <option value="Women" <%= filters.category === 'Women' ? 'selected' : '' %>>Women</option>
+                        <option value="Unisex" <%= filters.category === 'Unisex' ? 'selected' : '' %>>Unisex</option>
+                    </select>
+                </div>
+
+                <div class="filter-group price-inputs">
+                    <input type="number" name="minPrice" placeholder="Min Price" value="<%= filters.minPrice %>">
+                    <input type="number" name="maxPrice" placeholder="Max Price" value="<%= filters.maxPrice %>">
+                </div>
+
+                <button type="submit" class="filter-submit-btn">Apply Filters</button>
+                <a href="/products" class="clear-btn">Reset All</a>
+            </form>
+
+            <div class="product-grid">
+                <% if (products.length > 0) { %>
+                    <% products.forEach(product => { %>
+                        <div class="product-card">
+                            <div class="product-img-wrapper">
+                                <img src="<%= product.image %>" alt="<%= product.name %>">
+                            </div>
+                            <div class="product-info">
+                                <span class="category-tag"><%= product.category %></span>
+                                <h3><%= product.name %></h3>
+                                <p class="product-meta">Rating: ⭐<%= product.rating %> | Stock: <%= product.stock %></p>
+                                <p class="price">Rs. <%= product.price.toLocaleString() %></p>
+                                <button class="add-btn">Add to Cart</button>
+                            </div>
+                        </div>
+                    <% }) %>
+                <% } else { %>
+                    <div class="no-products">
+                        <p>No products match your current filtering criteria.</p>
+                    </div>
+                <% } %>
+            </div>
+
+            <% if (totalPages > 1) { %>
+                <div class="pagination">
+                    <% 
+                        let queryParams = `&search=${filters.search}&category=${filters.category}&minPrice=${filters.minPrice}&maxPrice=${filters.maxPrice}`;
+                    %>
+
+                    <% if (currentPage > 1) { %>
+                        <a href="/products?page=<%= currentPage - 1 %><%= queryParams %>" class="page-btn">« Previous</a>
+                    <% } %>
+
+                    <% for(let i = 1; i <= totalPages; i++) { %>
+                        <a href="/products?page=<%= i %><%= queryParams %>" class="page-btn <%= currentPage === i ? 'active-page' : '' %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+
+                    <% if (currentPage < totalPages) { %>
+                        <a href="/products?page=<%= currentPage + 1 %><%= queryParams %>" class="page-btn">Next »</a>
+                    <% } %>
+                </div>
+            <% } %>
+
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 NOIR STEPS. All Rights Reserved.</p>
+    </footer>
+
+    <script src="/script.js"></script>
+    
+</body>
+</html>
