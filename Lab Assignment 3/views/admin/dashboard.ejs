@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noir Steps | Admin Panel</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .admin-container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .action-btn-add { background-color: #ff4d00; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; font-weight: bold; }
+        .crud-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .crud-table th, .crud-table td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        .crud-table th { background-color: #222; color: white; }
+        .thumb-img { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .btn-edit { color: #007bff; text-decoration: none; margin-right: 15px; font-weight: bold; }
+        .btn-delete { color: #dc3545; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">NOIR <span>STEPS</span> [ADMIN]</div>
+        <ul class="nav-links">
+            <li><a href="/products">View Storefront</a></li>
+            <li><a href="/admin">Dashboard Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="admin-container">
+        <div class="dashboard-header">
+            <h2>Inventory Management Center</h2>
+            <a href="/admin/add" class="action-btn-add">+ Add New Product Unit</a>
+        </div>
+
+        <table class="crud-table">
+            <thead>
+                <tr>
+                    <th>Image Thumbnail</th>
+                    <th>Product Title Name</th>
+                    <th>Category Context</th>
+                    <th>Unit Price</th>
+                    <th>Stock Units</th>
+                    <th>System Control Triggers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product => { %>
+                    <tr>
+                        <td><img src="<%= product.image %>" class="thumb-img" alt="shoe image"></td>
+                        <td><strong><%= product.name %></strong></td>
+                        <td><%= product.category %></td>
+                        <td>Rs. <%= product.price.toLocaleString() %></td>
+                        <td><%= product.stock %> items left</td>
+                        <td>
+                            <a href="/admin/edit/<%= product._id %>" class="btn-edit">Edit Properties</a>
+                            <a href="/admin/delete/<%= product._id %>" onclick="return confirm('Are you sure you want to permanently delete this product? This action cannot be undone.');" class="btn-delete">Delete Item</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
