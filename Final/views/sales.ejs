@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOIR STEPS | Sales Management Analytics</title>
+    <link rel="stylesheet" href="/css/style.css?v=1.2">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+    <main class="sales-container">
+        <div class="sales-header">
+            <h1>Live Revenue Dashboard</h1>
+            <div class="refresh-timestamp" id="live-indicator">Auto-refreshing live entries</div>
+        </div>
+
+        <section class="metrics-grid">
+            <div class="metric-card card-revenue">
+                <div class="card-label">Total Revenue Generated</div>
+                <div class="card-value" id="total-revenue">Rs. <%= totalRevenue.toLocaleString() %></div>
+            </div>
+            
+            <div class="metric-card card-orders">
+                <div class="card-label">Total Fulfilled Orders</div>
+                <div class="card-value" id="total-orders"><%= totalOrders %></div>
+            </div>
+            
+            <div class="metric-card card-average">
+                <div class="card-label">Avg. Basket Value</div>
+                <div class="card-value" id="avg-value">
+                    Rs. <%= totalOrders > 0 ? Math.round(totalRevenue / totalOrders).toLocaleString() : 0 %>
+                </div>
+            </div>
+        </section>
+
+        <section class="table-card">
+            <h2>Recent Transaction Stream</h2>
+            <div class="table-responsive">
+                <table class="sales-dashboard-table">
+                    <thead>
+                        <tr>
+                            <th>Order Identifier ID</th>
+                            <th>Purchasing Customer</th>
+                            <th>Ordered Asset Breakdown</th>
+                            <th>Net Total</th>
+                            <th>Transaction Status</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-rows">
+                        <% recentTransactions.forEach(order => { %>
+                            <tr>
+                                <td><code>#<%= order._id.toString().substring(18) %></code></td>
+                                <td><strong><%= order.user ? order.user.name : 'Guest User' %></strong></td>
+                                <td class="order-items-summary">
+                                    <% order.items.forEach(item => { %>
+                                        • <%= item.product ? item.product.name : 'Unknown Product' %> (x<%= item.quantity %>)<br>
+                                    <% }) %>
+                                </td>
+                                <td class="text-revenue">Rs. <%= order.totalPrice.toLocaleString() %></td>
+                                <td><span class="status-badge status-fulfilled">Fulfilled</span></td>
+                                <td class="text-muted-date"><%= new Date(order.createdAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        $(document).ready(function() {
+            const POLL_FREQUENCY = 4000; // Poll entry intervals every 4 seconds
+            
+            setInterval(function() {
+                $.ajax({
+                    url: '/admin/sales/api/data', // Existing active analytic payload pipeline route
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response) {
+                            // 1. Refresh Premium Metric Summary Values
+                            $('#total-revenue').text('Rs. ' + Number(response.totalRevenue).toLocaleString());
+                            $('#total-orders').text(response.totalOrders);
+                            
+                            var calculatedAvg = response.totalOrders > 0 ? Math.round(response.totalRevenue / response.totalOrders) : 0;
+                            $('#avg-value').text('Rs. ' + calculatedAvg.toLocaleString());
+                            
+                            // 2. Build Premium Transaction Row Items
+                            var dynamicRowMarkup = '';
+                            
+                            response.recentTransactions.forEach(function(order) {
+                                var shortId = order._id.toString();
+                                if (shortId.length > 18) {
+                                    shortId = shortId.substring(18);
+                                }
+                                
+                                var clientName = order.user ? order.user.name : 'Guest User';
+                                
+                                // Parse items list internally safely
+                                var finalItemsSummary = '';
+                                if (order.items && order.items.length > 0) {
+                                    order.items.forEach(function(item) {
+                                        var productName = (item.product && item.product.name) ? item.product.name : 'Unknown Product';
+                                        finalItemsSummary += '• ' + productName + ' (x' + item.quantity + ')<br>';
+                                    });
+                                } else {
+                                    finalItemsSummary = 'No assets bound';
+                                }
+                                
+                                // Format individual order timestamps
+                                var timestampFormatted = '';
+                                if (order.createdAt) {
+                                    var orderDate = new Date(order.createdAt);
+                                    timestampFormatted = orderDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                                } else {
+                                    timestampFormatted = '--:--';
+                                }
+                                
+                                dynamicRowMarkup += '<tr>' +
+                                    '<td><code>#' + shortId + '</code></td>' +
+                                    '<td><strong>' + clientName + '</strong></td>' +
+                                    '<td class="order-items-summary">' + finalItemsSummary + '</td>' +
+                                    '<td class="text-revenue">Rs. ' + Number(order.totalPrice).toLocaleString() + '</td>' +
+                                    '<td><span class="status
